@@ -7,15 +7,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Preprocessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Preprocessor.class);
 
-    public Map<String, List<Integer>> call(Object memberIDs) {
+    private Random randomState;
+
+    public Preprocessor() {
+        randomState = new Random(42);
+    }
+
+    public Map<String, List<Integer>> call(List<String> memberIDs) {
         Map<String, List<Integer>> feature = new HashMap<>();
         // simulate feature access
-        for (String id : ((String) memberIDs).split(",")) {
-            feature.put(id, Arrays.asList(1, 2, 3));
+        for (String id : memberIDs) {
+            feature.put(id, Arrays.asList(
+                randomState.nextInt(10),
+                randomState.nextInt(10),
+                randomState.nextInt(10)));
         }
         LOGGER.info("Feature Map", feature);
         return feature;
